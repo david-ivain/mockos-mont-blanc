@@ -10,29 +10,43 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
     const [dragOffset, setDragOffset] = createSignal<{ x: number, y: number }>({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = createSignal(false);
     const [isMaximized, setIsMaximized] = createSignal(false);
+    const [isTouch, setIsTouch] = createSignal(false);
 
     // @ts-ignore
     const [apps, activeApps, activeWindow, { focus, open, close }] = useApps();
 
     // @ts-ignore
-    const [position] = useMouse();
+    const [position, touchPosition] = useMouse();
 
     document.addEventListener('mouseup', endDragging);
 
-    function startDragging(e: MouseEvent) {
+    function startDragging(e: MouseEvent | TouchEvent) {
         if (isMaximized()) return;
-        setDragOffset({ x: e.pageX - windowPosition().x, y: e.pageY - windowPosition().y });
+        if (e instanceof MouseEvent) {
+            setIsTouch(false);
+            setDragOffset({ x: e.pageX - windowPosition().x, y: e.pageY - windowPosition().y });
+        }
+        else {
+            setIsTouch(true);
+            setDragOffset({ x: e.touches[0].pageX - windowPosition().x, y: e.touches[0].pageY - windowPosition().y });
+        }
         setIsDragging(true);
         requestAnimationFrame(drag)
     }
 
     function drag() {
-        const mouseXY = position();
-        setWindowPosition({ x: mouseXY.x - dragOffset().x, y: mouseXY.y - dragOffset().y });
+        if (!isTouch()) {
+            const mouseXY = position();
+            setWindowPosition({ x: mouseXY.x - dragOffset().x, y: mouseXY.y - dragOffset().y });
+        }
+        else {
+            const touchXY = touchPosition();
+            setWindowPosition({ x: touchXY.x - dragOffset().x, y: touchXY.y - dragOffset().y });
+        }
         if (isDragging()) requestAnimationFrame(drag);
     }
 
-    function endDragging(e: MouseEvent) {
+    function endDragging(e: MouseEvent | TouchEvent) {
         setIsDragging(false);
     }
 
@@ -44,7 +58,7 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
         <div class={`c-window${isMaximized() ? ' c-window--maximized' : ''}${activeWindow() === appID ? ' c-window--active' : ''}`} style={`inset: ${windowPosition().y}px ${document.body.offsetWidth - width - windowPosition().x}px ${document.body.offsetHeight - document.querySelector<HTMLElement>('.c-appbar').offsetHeight - height - windowPosition().y}px ${windowPosition().x}px;`}
             onMouseDown={() => focus(appID)}>
             <div class="c-window__header">
-                <div class="c-window__title" onMouseDown={startDragging} onMouseUp={endDragging} onDblClick={maximize}>
+                <div class="c-window__title" onMouseDown={startDragging} onMouseUp={endDragging} onTouchStart={startDragging} onTouchEnd={endDragging} onDblClick={maximize}>
                     {apps()[appID].name}
                 </div>
                 <div class="c-window__controls">
