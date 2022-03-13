@@ -1,4 +1,5 @@
-import { JSX, PropsWithChildren } from "solid-js";
+import { createMemo, JSX, PropsWithChildren } from "solid-js";
+import { useApps } from "../../Contexts/AppsContext";
 import { MockApp } from "../../types";
 import "./_appbar.scss";
 
@@ -41,20 +42,21 @@ interface AppIconProps {
     /**
      * The app object.
      */
-    app: MockApp
-    /**
-     * Is the app open
-     */
-    active?: boolean
+    appID: string
 }
 
-AppBar.AppIcon = function ({ app, active = false }: AppIconProps) {
-    let className = 'c-appbar__app-icon';
-    if (active) className += ' c-appbar__app-icon--active';
+AppBar.AppIcon = function ({ appID }: AppIconProps) {
+    // @ts-ignore
+    const [apps, activeApps, activeWindow, { focus, open }] = useApps();
+    let app = apps()[appID];
+
+    const className = createMemo(() => {
+        return `c-appbar__app-icon${activeApps().includes(appID) ? ' c-appbar__app-icon--active' : ''}`;
+    });
 
     return (
         <AppBar.Element>
-            <button class={className} title={app.name} style={`color: ${app.iconColor}`}>
+            <button class={className()} title={app.name} style={`color: ${app.iconColor}`} onClick={() => open(appID)}>
                 {
                     typeof app.icon === 'string'
                         ? <img src={app.icon} alt={`${app.name} icon`} />

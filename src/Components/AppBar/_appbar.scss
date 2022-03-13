@@ -4,6 +4,14 @@
     display: flex;
     align-items: center;
     height: calc(var(--appbar-padding) * 2 + var(--icon-size) + var(--icon-padding) * 2);
+    position: relative;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+    @supports (backdrop-filter: opacity(1)) {
+        background-color: rgba($color: #fff, $alpha: 0.5);
+        backdrop-filter: blur(8px);
+    }
 
     &__group {
         display: flex;
