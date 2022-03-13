@@ -1,3 +1,9 @@
+# MockOS Mont Blanc (WIP)
+
+![The beautiful desktop of MockOS Mont Blanc](desktop.png)
+
+Just a fake OS built with SolidJS.
+
 ## Usage
 
 Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
