@@ -1,6 +1,7 @@
 import { createDeferred, createMemo, createSignal, PropsWithChildren, useContext } from "solid-js";
 import { useApps } from "../../Contexts/AppsContext";
 import { useMouse } from "../../Contexts/MouseContext";
+import { useWindow } from "../../Contexts/WindowContext";
 import { MockApp } from "../../types";
 import SVG from "../SVG/SVG";
 import "./_window.scss";
@@ -18,6 +19,8 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
 
     // @ts-ignore
     const [apps, activeApps, activeWindow, { focus, open, close }] = useApps();
+    // @ts-ignore
+    const [bodySize] = useWindow();
     const app = createMemo(() => apps()[appID]);
     const darkenedColor = createMemo(() => app().windowColorValue.darken(0.8));
 
@@ -67,7 +70,7 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
 
     return (
         <div class={`c-window${isMaximized() ? ' c-window--maximized' : ''}${activeWindow() === appID ? ' c-window--active' : ''}`}
-            style={`inset: ${windowPosition().y}px ${document.body.offsetWidth - width - windowPosition().x}px ${document.body.offsetHeight - document.querySelector<HTMLElement>('.c-appbar').offsetHeight - height - windowPosition().y}px ${windowPosition().x}px;`}
+            style={`inset: ${windowPosition().y}px ${bodySize().x - width - windowPosition().x}px ${bodySize().y - document.querySelector<HTMLElement>('.c-appbar').offsetHeight - height - windowPosition().y}px ${windowPosition().x}px;`}
             onMouseDown={() => focus(appID)}
             data-dragged={isDragging()}>
             <div class={`c-window__header${app().windowColorValue.luminance < 0.5 ? ' c-window__header--dark' : ''}`} style={`background-color: ${app().windowColor};`}>
