@@ -74,10 +74,10 @@ AppBar.SystemTray = function ({ children }: PropsWithChildren) {
                 <div class="c-appbar__systemtray-icons">
                     {children}
                 </div>
-                <div class="c-appbar__systemtray-date">
+                <button class="c-appbar__systemtray-date">
                     3:00AM<br />
                     3/12/2022
-                </div>
+                </button>
             </div>
         </AppBar.Element>
     )
@@ -85,9 +85,9 @@ AppBar.SystemTray = function ({ children }: PropsWithChildren) {
 
 AppBar.SystemTrayIcon = function ({ icon }: { icon: JSX.Element }) {
     return (
-        <div class="c-appbar__systemtray-icon">
+        <button class="c-appbar__systemtray-icon">
             {icon}
-        </div>
+        </button>
     )
 }
 

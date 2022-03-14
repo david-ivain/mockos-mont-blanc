@@ -5,8 +5,6 @@ import App from './App';
 import { AppsProvider } from './Contexts/AppsContext';
 import { MouseProvider } from './Contexts/MouseContext';
 
-document.addEventListener('dragover', e => e.preventDefault());
-
 render(() => (
     <MouseProvider position={{ x: 0, y: 0 }}>
         <AppsProvider>

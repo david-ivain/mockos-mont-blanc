@@ -6,7 +6,16 @@
     overflow: hidden;
     z-index: 0;
 
-    transition: inset 0.1s;
+    &:not([data-dragged="true"]) {
+        transition: inset 0.3s ease-in-out;
+    }
+
+    &[data-dragged="true"] {
+        &,
+        & * {
+            cursor: move;
+        }
+    }
 
     &--maximized {
         inset: 0 !important;
@@ -16,19 +25,30 @@
         z-index: 1;
 
         .c-window__header {
-            background-color: white;
+            filter: none;
         }
     }
 
     &__header {
-        background-color: #ddd;
+        filter: brightness(80%);
         display: flex;
         justify-content: space-between;
         box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
-        user-select: none;
+
+        &,
+        & * {
+            --webkit-user-select: none;
+            user-select: none;
+            --webkit-tap-highlight-color: transparent;
+        }
+
+        &--dark {
+            color: white;
+        }
     }
 
     &__title {
+        cursor: default;
         flex-grow: 1;
         display: flex;
         justify-content: center;
@@ -40,13 +60,16 @@
     }
 
     &__control {
-        border-left: 1px solid #ccc;
+        border: none;
+        border-left: 1px solid;
         text-align: center;
         padding: 4px;
-        transition: background-color 0.1s;
+        transition: backdrop-filter 0.1s;
+        background-color: transparent;
+        color: inherit;
 
         &:hover {
-            background-color: #eee;
+            backdrop-filter: brightness(80%);
         }
     }
 }
