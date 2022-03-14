@@ -10,8 +10,6 @@ class Color {
         this.r = r
         this.g = g
         this.b = b
-        console.log(this);
-
     }
 
     get luminance(): number {
@@ -38,8 +36,6 @@ class MockApp {
         this.icon = icon
         this.iconColor = iconColor
         this.windowColor = windowColor
-        console.log(this);
-
     }
 
     get iconColor(): string {
