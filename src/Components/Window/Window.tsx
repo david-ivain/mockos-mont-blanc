@@ -19,8 +19,6 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
 
     // @ts-ignore
     const [apps, activeApps, activeWindow, { focus, open, close }] = useApps();
-    // @ts-ignore
-    const [bodySize] = useWindow();
     const app = createMemo(() => apps()[appID]);
     const darkenedColor = createMemo(() => app().windowColorValue.darken(0.8));
 
@@ -70,7 +68,7 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
 
     return (
         <div class={`c-window${isMaximized() ? ' c-window--maximized' : ''}${activeWindow() === appID ? ' c-window--active' : ''}`}
-            style={`inset: ${windowPosition().y}px ${bodySize().x - width - windowPosition().x}px ${bodySize().y - document.querySelector<HTMLElement>('.c-appbar').offsetHeight - height - windowPosition().y}px ${windowPosition().x}px;`}
+            style={`top: ${isMaximized() ? 0 : windowPosition().y}px; width: ${isMaximized() ? '100vw' : `${width}px`}; height: ${isMaximized() ? 'calc(100vh - 72px)' : `${height}px`}; left: ${isMaximized() ? 0 : windowPosition().x}px;`}
             onMouseDown={() => focus(appID)}
             data-dragged={isDragging()}>
             <div class={`c-window__header${app().windowColorValue.luminance < 0.5 ? ' c-window__header--dark' : ''}`} style={`background-color: ${app().windowColor};`}>
