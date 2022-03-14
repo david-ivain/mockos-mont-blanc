@@ -68,25 +68,27 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
 
     return (
         <div class={`c-window${isMaximized() ? ' c-window--maximized' : ''}${activeWindow() === appID ? ' c-window--active' : ''}`}
-            style={`top: ${isMaximized() ? 0 : windowPosition().y}px; width: ${isMaximized() ? '100vw' : `${width}px`}; height: ${isMaximized() ? 'calc(100vh - 72px)' : `${height}px`}; left: ${isMaximized() ? 0 : windowPosition().x}px;`}
+            style={`${app().defaultPosition.alignY}: ${isMaximized() ? 0 : windowPosition().y}px; width: ${isMaximized() ? '100vw' : `${width}px`}; height: ${isMaximized() ? 'calc(100vh - 72px)' : `${height}px`}; ${app().defaultPosition.alignX}: ${isMaximized() ? 0 : windowPosition().x}px;`}
             onMouseDown={() => focus(appID)}
             data-dragged={isDragging()}>
-            <div class={`c-window__header${app().windowColorValue.luminance < 0.5 ? ' c-window__header--dark' : ''}`} style={`background-color: ${app().windowColor};`}>
-                <div class="c-window__title" onMouseDown={startDragging} onMouseUp={endDragging} onTouchStart={startDragging} onTouchEnd={endDragging} onDblClick={maximize}>
-                    {app().name}
-                </div>
-                <div class="c-window__controls">
-                    <button class="c-window__control" style={`border-color: ${darkenedColor().hex};`}>
-                        <SVG.ChevronDownIcon></SVG.ChevronDownIcon>
-                    </button>
-                    <button class="c-window__control" onClick={maximize} style={`border-color: ${darkenedColor().hex};`}>
-                        <SVG.ChevronUpIcon></SVG.ChevronUpIcon>
-                    </button>
-                    <button class="c-window__control" onClick={() => close(appID)} style={`border-color: ${darkenedColor().hex};`}>
-                        <SVG.XIcon></SVG.XIcon>
-                    </button>
-                </div>
-            </div>
+            {app().frameless ? <></>
+                : (<div class={`c-window__header${app().windowColorValue.luminance < 0.5 ? ' c-window__header--dark' : ''}`} style={`background-color: ${app().windowColor};`}>
+                    <div class="c-window__title" onMouseDown={startDragging} onMouseUp={endDragging} onTouchStart={startDragging} onTouchEnd={endDragging} onDblClick={maximize}>
+                        {app().name}
+                    </div>
+                    <div class="c-window__controls">
+                        <button class="c-window__control" style={`border-color: ${darkenedColor().hex};`}>
+                            <SVG.ChevronDownIcon></SVG.ChevronDownIcon>
+                        </button>
+                        <button class="c-window__control" onClick={maximize} style={`border-color: ${darkenedColor().hex};`}>
+                            <SVG.ChevronUpIcon></SVG.ChevronUpIcon>
+                        </button>
+                        <button class="c-window__control" onClick={() => close(appID)} style={`border-color: ${darkenedColor().hex};`}>
+                            <SVG.XIcon></SVG.XIcon>
+                        </button>
+                    </div>
+                </div>)
+            }
             {children}
         </div>
     )
