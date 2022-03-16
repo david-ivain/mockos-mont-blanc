@@ -17,13 +17,15 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
     let clickTime = 0;
     let dragAnimationFrame;
 
-    // @ts-ignore
-    const [apps, activeApps, activeWindow, { focus, open, close }] = useApps();
+    const appsContext = useApps();
+    const apps = appsContext.apps,
+        activeWindow = appsContext.activeWindow,
+        focus = appsContext.methods.focus,
+        close = appsContext.methods.close;
     const app = createMemo(() => apps()[appID]);
     const darkenedColor = createMemo(() => app().windowColorValue.darken(0.8));
 
-    // @ts-ignore
-    const [position, touchPosition] = useMouse();
+    const { position, touchPosition } = useMouse();
 
     document.addEventListener('mouseup', endDragging);
 

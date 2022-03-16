@@ -10,8 +10,8 @@ import { MockApp } from './types';
 
 
 const App: Component = () => {
-  // @ts-ignore
-  const [apps, activeApps, activeWindow, { focus, open }]: [() => { [name: string]: MockApp }, () => string[], () => string] = useApps();
+  const appsContext = useApps();
+  const apps = appsContext.apps, activeApps = appsContext.activeApps;
 
   let pinnedApps = [
     'ex1',

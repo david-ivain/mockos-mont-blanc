@@ -1,8 +1,13 @@
-import { createContext, createSignal, onMount, useContext } from "solid-js"
+import { Accessor, Context, createContext, createSignal, onMount, useContext } from "solid-js"
 import SVG from "../Components/SVG/SVG";
 import { MockApp } from "../types";
 
-const AppsContext = createContext();
+const AppsContext: Context<{
+    apps: Accessor<{ [name: string]: MockApp; }>;
+    activeApps: Accessor<string[]>;
+    activeWindow: Accessor<string>;
+    methods: { focus(id: string): void; open(id: string): void; close(id: string): void; };
+}> = createContext();
 
 export function AppsProvider(props) {
     const [apps, setApps] = createSignal<{ [name: string]: MockApp }>({
@@ -12,11 +17,11 @@ export function AppsProvider(props) {
     }),
         [activeApps, setActiveApps] = createSignal<string[]>([]),
         [activeWindow, setActiveWindow] = createSignal<string>(),
-        store = [
+        store = {
             apps,
             activeApps,
             activeWindow,
-            {
+            methods: {
                 focus(id: string) {
                     setActiveWindow(id);
                 },
@@ -30,7 +35,7 @@ export function AppsProvider(props) {
                     if (activeApps().includes(id)) setActiveApps(activeApps().filter(a => a !== id));
                 }
             }
-        ];
+        };
 
     return (
         <AppsContext.Provider value={store}>

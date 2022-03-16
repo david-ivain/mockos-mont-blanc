@@ -1,16 +1,17 @@
-import { createContext, createSignal, onMount, useContext } from "solid-js"
+import { Accessor, Context, createContext, createSignal, onMount, useContext } from "solid-js"
 
-/////
-
-const MouseContext = createContext();
+const MouseContext: Context<{
+    position: Accessor<{ x: number, y: number }>,
+    touchPosition: Accessor<{ x: number, y: number }>
+}> = createContext();
 
 export function MouseProvider(props) {
     const [position, setPosition] = createSignal({ x: 0, y: 0 }),
         [touchPosition, setTouchPosition] = createSignal({ x: 0, y: 0 }),
-        store = [
+        store = {
             position,
             touchPosition
-        ];
+        };
 
     onMount(() => {
         document.addEventListener('mousemove', e => setPosition({ x: e.pageX, y: e.pageY }));

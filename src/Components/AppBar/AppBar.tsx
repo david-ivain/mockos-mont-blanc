@@ -46,8 +46,10 @@ interface AppIconProps {
 }
 
 AppBar.AppIcon = function ({ appID }: AppIconProps) {
-    // @ts-ignore
-    const [apps, activeApps, activeWindow, { focus, open }] = useApps();
+    const appsContext = useApps();
+    const apps = appsContext.apps,
+        activeApps = appsContext.activeApps,
+        open = appsContext.methods.open;
     let app = apps()[appID];
 
     const className = createMemo(() => {
