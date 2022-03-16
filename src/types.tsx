@@ -25,6 +25,15 @@ class Color {
     }
 }
 
+function DefaultContent() {
+    return (
+        <div>
+            <h2>Oops</h2>
+            <p>Nothing to show here :/</p>
+        </div>
+    )
+}
+
 interface MockAppParameters {
     name: string
     icon: string | JSXElement
@@ -32,6 +41,7 @@ interface MockAppParameters {
     windowColor?: string
     frameless?: boolean
     defaultPosition?: { x?: number, y?: number, alignX: "left" | "right", alignY: "top" | "bottom" }
+    content?: () => JSX.Element
 }
 
 class MockApp {
@@ -41,14 +51,16 @@ class MockApp {
     windowColorValue: Color
     frameless: boolean
     defaultPosition?: { x?: number, y?: number, alignX: "left" | "right", alignY: "top" | "bottom" }
+    content: () => JSX.Element
 
-    constructor({ name, icon, iconColor, windowColor = '#fff', frameless = false, defaultPosition = { alignX: 'left', alignY: 'top' } }: MockAppParameters) {
+    constructor({ name, icon, iconColor, windowColor = '#fff', frameless = false, defaultPosition = { alignX: 'left', alignY: 'top' }, content = DefaultContent }: MockAppParameters) {
         this.name = name
         this.icon = icon
         this.iconColor = iconColor
         this.windowColor = windowColor
         this.frameless = frameless
         this.defaultPosition = defaultPosition
+        this.content = content
     }
 
     get iconColor(): string {

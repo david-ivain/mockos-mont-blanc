@@ -22,7 +22,7 @@ const App: Component = () => {
     <>
       <Desktop>
         <For each={activeApps()}>
-          {(app, index) => <Window appID={app} x={apps()[app].defaultPosition.x || (index() + 1) * 32} y={apps()[app].defaultPosition.y || (index() + 1) * 32}></Window>}
+          {(app, index) => <Window appID={app} x={apps()[app].defaultPosition.x || (index() + 1) * 32} y={apps()[app].defaultPosition.y || (index() + 1) * 32}>{apps()[app].content()}</Window>}
         </For>
       </Desktop>
       <AppBar>
