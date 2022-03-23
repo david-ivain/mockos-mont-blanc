@@ -1,17 +1,22 @@
 .c-window {
+    --window-border-width: 2px;
+    --window-outline-width: 1px;
+
     position: absolute;
     background-color: white;
-    overflow: hidden;
+    overflow: visible;
     z-index: 0;
     animation: window-pop-in 0.5s;
-    border-width: 2px;
+    border-width: var(--window-border-width);
     border-style: solid;
     border-color: gainsboro gray gray gainsboro;
-    outline: 1px solid dimgray;
+    outline: var(--window-outline-width) solid dimgray;
     display: flex;
     flex-direction: column;
+    min-width: 300px;
+    min-height: 200px;
 
-    &:not([data-dragged="true"]) {
+    &:not([data-dragged="true"]):not([data-resizing="true"]) {
         transition: top 0.3s ease-in-out, left 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
     }
 
@@ -24,6 +29,10 @@
 
     &.c-window--maximized {
         border-radius: 0;
+
+        .c-window__resize-area {
+            cursor: default;
+        }
     }
 
     &--active {
@@ -84,6 +93,74 @@
         border: 1px solid dimgray;
         flex-grow: 1;
         overflow: auto;
+    }
+
+    &__resize-area {
+        position: absolute;
+
+        &[data-position="left"] {
+            left: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            top: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            bottom: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            width: 4px;
+            cursor: ew-resize;
+        }
+
+        &[data-position="right"] {
+            right: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            top: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            bottom: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            width: 4px;
+            cursor: ew-resize;
+        }
+
+        &[data-position="top"] {
+            top: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            left: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            right: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            height: 4px;
+            cursor: ns-resize;
+        }
+
+        &[data-position="bottom"] {
+            bottom: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            left: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            right: calc(4px - (var(--window-border-width) + var(--window-outline-width)));
+            height: 4px;
+            cursor: ns-resize;
+        }
+
+        &[data-position="top-left"] {
+            left: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            top: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            width: 4px;
+            height: 4px;
+            cursor: nwse-resize;
+        }
+
+        &[data-position="top-right"] {
+            right: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            top: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            width: 4px;
+            height: 4px;
+            cursor: nesw-resize;
+        }
+
+        &[data-position="bottom-left"] {
+            left: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            bottom: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            width: 4px;
+            height: 4px;
+            cursor: nesw-resize;
+        }
+
+        &[data-position="bottom-right"] {
+            right: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            bottom: calc(0px - (var(--window-border-width) + var(--window-outline-width)));
+            width: 4px;
+            height: 4px;
+            cursor: nwse-resize;
+        }
     }
 }
 
