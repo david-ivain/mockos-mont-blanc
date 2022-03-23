@@ -53,7 +53,7 @@ class MockApp {
     defaultPosition?: { x?: number, y?: number, alignX: "left" | "right", alignY: "top" | "bottom" }
     content: () => JSX.Element
 
-    constructor({ name, icon, iconColor, windowColor = '#fff', frameless = false, defaultPosition = { alignX: 'left', alignY: 'top' }, content = DefaultContent }: MockAppParameters) {
+    constructor({ name, icon, iconColor, windowColor = '#D3D3D3', frameless = false, defaultPosition = { alignX: 'left', alignY: 'top' }, content = DefaultContent }: MockAppParameters) {
         this.name = name
         this.icon = icon
         this.iconColor = iconColor

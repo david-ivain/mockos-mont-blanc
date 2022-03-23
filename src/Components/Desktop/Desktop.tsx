@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "solid-js";
+import { onMount, PropsWithChildren } from "solid-js";
 import "./_desktop.scss";
 
 function Desktop({ children }: PropsWithChildren) {

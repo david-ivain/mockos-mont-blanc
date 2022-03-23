@@ -6,6 +6,8 @@ import "./_appbar.scss";
 function AppBar({ children }) {
     return (
         <div class="c-appbar">
+            <AppBar.AppIcon appID="menu"></AppBar.AppIcon>
+            <AppBar.Separator></AppBar.Separator>
             {children}
         </div>
     )

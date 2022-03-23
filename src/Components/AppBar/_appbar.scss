@@ -1,22 +1,14 @@
 .c-appbar {
-    background-color: white;
+    background-color: lightgray;
     padding: var(--appbar-padding) calc(var(--appbar-padding) / 2);
     display: flex;
-    align-items: center;
-    height: calc(var(--appbar-padding) * 2 + var(--icon-size) + var(--icon-padding) * 2);
-    position: relative;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+    align-items: stretch;
     z-index: 1000;
-
-    @supports (backdrop-filter: opacity(1)) {
-        background-color: rgba($color: #fff, $alpha: 0.5);
-        backdrop-filter: blur(8px);
-    }
+    border-top: 2px solid dimgray;
 
     &__group {
         display: flex;
-        align-items: center;
-        height: 100%;
+        align-items: stretch;
 
         &--expand {
             flex-grow: 1;
@@ -25,83 +17,46 @@
 
     &__element {
         margin: 0 calc(var(--appbar-padding) / 2);
-        height: 100%;
         display: flex;
-        align-items: center;
-    }
-
-    &__separator,
-    &__app-icon,
-    &__app-icon svg,
-    &__app-icon img {
-        height: var(--icon-size);
+        align-items: stretch;
     }
 
     &__separator {
-        border-left: 2px solid #ccc;
+        border-left: 2px solid gray;
     }
 
     &__app-icon {
-        border: none;
         display: block;
         padding: var(--icon-padding);
-        height: calc(var(--icon-size) + var(--icon-padding) * 2);
-        width: calc(var(--icon-size) + var(--icon-padding) * 2);
-        background-color: #ddd;
-        border-radius: 8px;
-        transition: background-color 0.1s;
-
-        &:hover {
-            background-color: #ccc;
-        }
+        background-color: lightgray;
 
         &--active {
-            background-color: #333;
-
-            &:hover {
-                background-color: #222;
-            }
+            background-color: dimgray;
         }
 
         svg,
         img {
             width: var(--icon-size);
+            height: var(--icon-size);
+            display: block;
         }
     }
 
     &__systemtray {
         display: flex;
-        align-items: center;
-        height: 100%;
-        /*
-        background-color: #ddd;
-        border-radius: 8px;
-        padding: 0 8px;
-
-        &:hover {
-            background-color: #ccc;
-        }
-        */
+        align-items: stretch;
 
         &-date,
         &-icons {
-            background-color: #ddd;
-            border-radius: 8px;
-            height: 100%;
             display: flex;
             align-items: center;
             text-align: center;
             cursor: default;
-            transition: background-color 0.1s;
-            border: none;
-
-            &:hover {
-                background-color: #ccc;
-            }
         }
 
         &-date {
             padding: 0 16px;
+            background-color: transparent;
         }
 
         &-icons {
@@ -110,20 +65,14 @@
         }
 
         &-icon {
-            border: none;
             background-color: transparent;
             margin: 0 2px;
-            border-radius: 4px;
             padding: 4px;
-            transition: background-color 0.1s;
-
-            &:hover {
-                background-color: #bbb;
-            }
 
             svg {
                 height: 24px;
                 width: 24px;
+                display: block;
             }
         }
     }

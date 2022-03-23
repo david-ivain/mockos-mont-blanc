@@ -70,7 +70,7 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
 
     return (
         <div class={`c-window${isMaximized() ? ' c-window--maximized' : ''}${activeWindow() === appID ? ' c-window--active' : ''}`}
-            style={`${app().defaultPosition.alignY}: ${isMaximized() ? 0 : windowPosition().y}px; width: ${isMaximized() ? '100vw' : `${width}px`}; height: ${isMaximized() ? 'calc(100vh - 72px)' : `${height}px`}; ${app().defaultPosition.alignX}: ${isMaximized() ? 0 : windowPosition().x}px;`}
+            style={`${app().defaultPosition.alignY}: ${isMaximized() ? 0 : windowPosition().y}px; width: ${isMaximized() ? '100vw' : `${width}px`}; height: ${isMaximized() ? '100%' : `${height}px`}; ${app().defaultPosition.alignX}: ${isMaximized() ? 0 : windowPosition().x}px;`}
             onMouseDown={() => focus(appID)}
             data-dragged={isDragging()}>
             {app().frameless ? <></>
@@ -91,7 +91,9 @@ function Window({ children, x = 32, y = 32, width = 300, height = 200, appID }: 
                     </div>
                 </div>)
             }
-            {children}
+            <div className="c-window__content">
+                {children}
+            </div>
         </div>
     )
 }

@@ -19,15 +19,13 @@ const App: Component = () => {
   ];
 
   return (
-    <>
+    <div id="mockos">
       <Desktop>
         <For each={activeApps()}>
           {(app, index) => <Window appID={app} x={apps()[app].defaultPosition.x || (index() + 1) * 32} y={apps()[app].defaultPosition.y || (index() + 1) * 32}>{apps()[app].content()}</Window>}
         </For>
       </Desktop>
       <AppBar>
-        <AppBar.AppIcon appID={'menu'}></AppBar.AppIcon>
-        <AppBar.Separator></AppBar.Separator>
         <AppBar.Group expand={true}>
           <For each={pinnedApps}>
             {(pinnedApp, index) => <AppBar.AppIcon appID={pinnedApp}></AppBar.AppIcon>}
@@ -43,7 +41,7 @@ const App: Component = () => {
           </AppBar.SystemTray>
         </AppBar.Group>
       </AppBar>
-    </>
+    </div>
   );
 };
 

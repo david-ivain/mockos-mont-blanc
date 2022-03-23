@@ -2,4 +2,9 @@
     --appbar-padding: 8px;
     --icon-size: 48px;
     --icon-padding: 4px;
+    --icon-border-size: 2px;
+}
+
+#mockos[data-theme="snow"] {
+    --icon-border-size: 0px;
 }

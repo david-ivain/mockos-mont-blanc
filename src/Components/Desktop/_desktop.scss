@@ -2,7 +2,6 @@
     flex-grow: 1;
     padding: 8px;
     position: relative;
-    height: calc(100% - (var(--icon-size) + var(--icon-padding) * 2 + var(--appbar-padding) * 2));
 
     &__icon {
         margin: 8px;
